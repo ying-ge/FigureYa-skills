@@ -153,13 +153,167 @@ which population, and the distribution of multiple types of mutations.
 ```
 
 #### b) 应用场景 Application scenario
+
+这个章节需要提供专业的指导，帮助用户理解：
+1. 这个方法的原理和特点
+2. 什么情况下使用这个方法
+3. 数据要求是什么
+4. 与其他方法的对比
+5. 相关学习资源
+
 ```markdown
 ## 应用场景 Application scenario
 
-[中文说明：这个图表用于展示什么，解决什么问题]
+### 方法原理和特点
+[方法名称]，[方法类别描述]。[相对于其他方法的优势/特点]。
 
-[English description: What this chart shows, what problem it solves]
+[Method name], [method category description]. [Advantages/features relative to other methods].
+
+例如：
+UMAP，三大主流的降纬方法之一。UMAP相对于t-SNE的优势在于能够保存局部结构信息，
+也就是空间距离比较近的细胞类群在结果展示的时候也会比较近。
+
+UMAP, one of the three mainstream latitude reduction methods. The advantage of UMAP
+over t-SNE is that it can preserve local structural information, that is, spatially
+closer cell taxa will be closer in the result display.
+
+### 具体使用场景
+适用于：
+
+1. [场景一：具体应用]
+2. [场景二：具体应用]
+3. [场景三：具体应用]
+
+Applicable to:
+
+1. [Scenario 1: specific application]
+2. [Scenario 2: specific application]
+3. [Scenario 3: specific application]
+
+例如（生存曲线）：
+用于展示分类样本的生存曲线，或其他有结局和结局发生时间的数据。
+
+Used to present survival curves for categorized samples, or other data with
+endpoints and time of occurrence of endpoints.
+
+例如（瀑布图）：
+- 场景一：作为全基因组测序或全外显子组测序文章的第一个图。
+- 场景二：展示感兴趣的癌症类型里，某一个通路的基因突变情况。
+
+- Scenario 1: As the first figure in a whole genome sequencing or whole exome
+  sequencing article.
+- Scenario 2: Show the genetic mutation of a certain pathway in the type of
+  cancer you are interested in.
+
+### 数据要求
+[需要什么类型的数据，数据结构要求]
+
+[Data type requirements and data structure requirements]
+
+例如：
+需要至少两列信息：结局和结局的发生时间。如果还要做组间对比就再来一列分组信息。
+
+At least two columns of information are needed: the ending and when the ending
+occurred. If you also want to do a comparison between groups have another column
+for grouping information.
+
+### 方法/工具选择
+[为什么选择这个工具/方法，与其他方法/工具的对比]
+
+[Why choose this tool/method, comparison with other methods/tools]
+
+例如：
+这里用TCGAbiolinks下载数据，用maftools画图。如果要更灵活的定制，可参考
+FigureYa42oncoprint，用complexheatmap画图。
+
+Here, use TCGAbiolinks to download data and draw with maftools. If you want more
+flexible customization, you can refer to FigureYa42oncoprint and draw with
+complexheatmap.
+
+或者：
+如果想用Java版GSEA做富集分析，自己DIY结果图，请用FigureYa13GSEA_Java。
+
+If you want to use Java version of GSEA to do enrichment analysis and DIY result
+plot by yourself, please use FigureYa13GSEA_Java.
+
+### 相关 FigureYa 模块
+[相关的其他 FigureYa 模块推荐]
+
+[Related FigureYa module recommendations]
+
+例如：
+t-SNE可参考FigureYa27t-SNE
+
+The t-SNE can be found in FigureYa27t-SNE
+
+或者：
+可以通过best separation来按表达量高低分组，可参考FigureYa4bestSeparation用
+中位值分组或找最佳分组；或者批量为多个基因找最佳分组，可参考
+FigureYa35batch_bestSeparation。
+
+You can use best separation to group by high or low expression, see
+FigureYa4bestSeparation to group by median value or find the best group; or batch
+to find the best group for multiple genes, see FigureYa35batch_bestSeparation.
+
+### 学习资源和背景知识
+[深入学习的资源链接，包括教程、文献、博客等]
+
+[Learning resources including tutorials, papers, blogs, etc.]
+
+例如：
+更多应用和背景知识可参考"小白学统计"的生存分析系列：
+
+- 生存分析（一）生存分析方法，你听说过几种？
+- 生存分析（二）中位生存时间和中位随访时间
+- 生存分析（三）log-rank检验在什么情况下失效？
+
+More applications and background knowledge can be found in the survival analysis
+series of "Xiaobai Learning Statistics":
+
+- Survival Analysis (I) Survival analysis methods, how many have you heard of?
+- Survival Analysis (II) Median survival time and median follow-up time
+- Survival Analysis (III) Under what circumstances does the log-rank test fail?
+
+或者：
+maftools功能丰富，浏览一下<https://bioconductor.org/packages/release/bioc/vignettes/maftools/inst/doc/maftools.html>，
+知道用它能画哪些图，需要时就知道过来找啦～
+
+Maftools are rich in functions, browse <https://bioconductor.org/packages/release/bioc/vignettes/maftools/inst/doc/maftools.html>
+to know what kind of graphs you can draw with it, and then come to it when you need it~
 ```
+
+**应用场景章节的层次结构：**
+
+1. **方法原理和特点**（必需）
+   - 这是什么方法？
+   - 属于什么类别？
+   - 相对于其他方法的优势是什么？
+
+2. **具体使用场景**（必需）
+   - 用于展示什么？
+   - 解决什么问题？
+   - 典型应用案例（至少1-3个）
+
+3. **数据要求**（必需）
+   - 需要什么类型的数据？
+   - 数据结构要求是什么？
+   - 数据预处理建议
+
+4. **方法/工具选择**（推荐）
+   - 为什么选择这个工具/方法？
+   - 与其他方法/工具的对比
+   - 什么时候应该用其他方法
+
+5. **相关 FigureYa 模块**（推荐）
+   - 相关分析模块的链接
+   - 可选的其他实现方式
+   - 数据预处理相关模块
+
+6. **学习资源和背景知识**（推荐）
+   - 相关教程链接
+   - 方法学文献
+   - 官方文档
+   - 博客/公众号文章
 
 #### c) 环境设置 Environment setting
 ```markdown
