@@ -234,6 +234,184 @@ cat("所有依赖包安装完成！| All dependencies installed successfully!\n"
    - 添加必要的错误检查
    - 提供清晰的错误信息
 
+## 参数注释策略：哪些需要突出标注？
+
+**FigureYa 的核心设计理念**：让用户能够快速找到需要调整的参数，而不必关注每一个技术细节。
+
+### 🔴 第一优先级：必须突出标注的参数
+
+在参数设置章节开头用醒目的提示：
+```markdown
+## 参数设置 Parameter setting
+
+[参数描述]，**根据具体需求调整**。
+
+[Parameter description], **adjust according to specific needs**.
+```
+
+**包括：**
+
+#### 1. 分析阈值类参数（直接影响结果）
+```r
+logFCcut <- 1.5      #log2-foldchange 阈值
+pvalCut <- 0.05      #P.value 阈值
+adjPcut <- 0.05      #adj.P.value 阈值
+```
+**判断标准**：
+- 这些值改变会直接影响哪些基因/样本被认为是"显著的"
+- 用户经常需要根据具体数据集或研究标准调整
+- 有领域标准（如 p<0.05）但不是绝对的
+
+#### 2. 图表模式/样式选择（改变整体外观）
+```r
+#plot_mode <- "classic" #经典版 classic version
+plot_mode <- "advanced" #酷炫版 cool version
+```
+**判断标准**：
+- 提供完全不同的可视化风格
+- 不同模式适合不同的场景/需求
+- 用户需要明确选择
+
+#### 3. 图表范围和边界设置（影响显示效果）
+```r
+#置x，y軸的最大最小位置
+#set the maximum and minimum positions of the x and y axes
+xmin <- (range(x$logFC)[1]- (range(x$logFC)[1]+ 10))
+xmax <- (range(x$logFC)[1]+ (10-range(x$logFC)[1]))
+ymin <- 0
+ymax <- max(-log10(x$P.Value)) * 1.1
+```
+**判断标准**：
+- 控制图表的显示范围
+- 影响数据点的可见性
+- 用户经常需要调整以获得最佳视觉效果
+
+#### 4. 颜色和外观自定义（影响美观和出版要求）
+```r
+# 基因名的颜色，需大于等于pathway的数量，这里自定义了足够多的颜色
+# the color of the gene name needs to be greater than or equal to the number of pathway, and here a sufficient number of colors have been customized
+mycol <- c("darkgreen","chocolate4","blueviolet","#223D6C","#D20A13")
+```
+**判断标准**：
+- 影响图表的美观性
+- 可能需要匹配期刊要求或机构配色
+- 用户经常需要自定义
+
+#### 5. 数据转换/过滤参数（改变分析逻辑）
+```r
+#用log2转换还是原始值
+#use log2 transformed or raw values
+use_log_transform <- TRUE
+
+#最小表达量过滤阈值
+#minimum expression filter threshold
+min_expression <- 1
+```
+**判断标准**：
+- 改变数据的处理方式
+- 可能影响分析结果的解释
+- 不同研究可能有不同的标准
+
+### 🟡 第二优先级：需要注释但不需要突出的参数
+
+在代码行内添加简洁注释：
+
+```r
+#查看前3个基因在前4个sample中的表达矩阵
+#view the expression matrix of the first 3 genes in the first 4 samples
+expr_df[1:3,1:4]
+
+#用`prcomp`进行PCA分析
+#PCA analysis with `prcomp`
+pca.results <- prcomp(expr_df, center = TRUE, scale. = FALSE)
+```
+
+**包括：**
+- 函数调用的参数（已有合理的默认值）
+- 数据查看/检查步骤
+- 标准的数据处理操作
+
+### 🟢 第三优先级：不需要注释的参数
+
+这些参数通常不需要注释：
+- R 函数的标准参数（如 `na.rm=TRUE`）
+- 技术细节（如 `stringsAsFactors=FALSE`）
+- 明确的自解释变量名（如 `n_bootstrap=1000`）
+
+### 注释层次策略
+
+#### 1. 简洁注释（适用于大多数情况）
+```r
+logFCcut <- 1.5 #log2-foldchange
+```
+
+#### 2. 解释性注释（当目的不明显时）
+```r
+#不同阈值的点的颜色
+#color of points with different thresholds
+cols[x$P.Value < pvalCut & x$logFC >logFCcut]<- "#FB9A99"
+```
+
+#### 3. 警告性注释（当参数有特殊要求时）
+```r
+# 基因名的颜色，需大于等于pathway的数量，这里自定义了足够多的颜色
+# the color of the gene name needs to be greater than or equal to the number of pathway, and here a sufficient number of colors have been customized
+mycol <- c("darkgreen","chocolate4","blueviolet")
+```
+
+### 判断决策流程图
+
+当判断一个参数是否需要注释时，问自己以下问题：
+
+```
+这个参数是否需要用户经常调整？
+├─ 是 → 🔴 第一优先级（突出标注）
+└─ 否 → 继续
+
+这个参数是否影响分析结果的科学性？
+├─ 是 → 🔴 第一优先级（突出标注）
+└─ 否 → 继续
+
+这个参数是否影响图表的美观/可读性？
+├─ 是 → 🔴 第一优先级（突出标注）
+└─ 否 → 继续
+
+这个参数的目的是否不明显？
+├─ 是 → 🟡 第二优先级（行内注释）
+└─ 否 → 🟢 第三优先级（无需注释）
+```
+
+### 需要领域专家判断的情况
+
+以下情况**必须**由有经验的领域专家来判断：
+
+1. **科学阈值的标准值**
+   - 例如：p-value cutoff 应该是 0.05 还是 0.01？
+   - 需要了解领域惯例和发表要求
+
+2. **参数组合的影响**
+   - 某些参数组合可能产生意外结果
+   - 需要实践经验来识别
+
+3. **边界情况和特殊数据**
+   - 某些参数在特定数据下可能失效
+   - 需要实际使用经验
+
+4. **用户体验平衡**
+   - 太多参数会让用户困惑
+   - 太少参数会降低灵活性
+   - 需要理解典型使用场景
+
+### 实践建议
+
+1. **优先考虑典型用户** - 大多数用户的典型需求是什么？
+2. **提供合理默认值** - 默认值应该适用于 80% 的场景
+3. **使用示例数据测试** - 用示例数据测试每个参数的调整效果
+4. **参考现有模块** - 查看 FigureYa 中类似模块是如何处理的
+5. **获取反馈** - 让实际用户使用并提供反馈
+
+记住：**好的注释不是解释所有技术细节，而是帮助用户快速找到需要调整的关键点。**
+
 ## 工作流程
 
 当用户提供 R 代码并要求创建 FigureYa 模块时：
