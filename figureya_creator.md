@@ -261,18 +261,10 @@ to find the best group for multiple genes, see FigureYa35batch_bestSeparation.
 [Learning resources including tutorials, papers, blogs, etc.]
 
 例如：
-更多应用和背景知识可参考"小白学统计"的生存分析系列：
+更多应用和背景知识可参考相关的生存分析教程和方法学文献。
 
-- 生存分析（一）生存分析方法，你听说过几种？
-- 生存分析（二）中位生存时间和中位随访时间
-- 生存分析（三）log-rank检验在什么情况下失效？
-
-More applications and background knowledge can be found in the survival analysis
-series of "Xiaobai Learning Statistics":
-
-- Survival Analysis (I) Survival analysis methods, how many have you heard of?
-- Survival Analysis (II) Median survival time and median follow-up time
-- Survival Analysis (III) Under what circumstances does the log-rank test fail?
+More applications and background knowledge can be found in related survival
+analysis tutorials and methodology literature.
 
 或者：
 maftools功能丰富，浏览一下<https://bioconductor.org/packages/release/bioc/vignettes/maftools/inst/doc/maftools.html>，
