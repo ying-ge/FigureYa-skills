@@ -59,16 +59,97 @@ Xiaofan Lu, et al. (2025). FigureYa: A Standardized Visualization Framework for 
 每个 R Markdown 文件应包含以下章节：
 
 #### a) 需求描述 Requirement description
+
+这个章节是用户首先看到的内容，需要清晰地说明：
+1. 从真实文献中截取的示例图
+2. 图所在的 Figure legend（图片说明文字）
+3. 文献链接
+4. 对图的理解/分析
+
 ```markdown
 ## 需求描述 Requirement description
 
-画出像paper里这样美的[图表类型]。
+[简短描述：想要画什么类型的图，或者从文献中看到的效果]
 
 Draw a beautiful [chart type] like this one in the paper.
 
 ![](example.png)
+# 或者使用外部链接：
+# ![](https://ars.els-cdn.com/content/image/1-s2.0-S1534580719301455-fx1.jpg)
 
-From <[参考文献链接]>
+出自<[文献链接]>, [Figure 编号或描述]
+
+from<[文献链接]>, [Figure number or description]
+
+例如：
+出自<https://www.nature.com/articles/s41467-018-06944-1>, Figure 2b
+from<https://www.nature.com/articles/s41467-018-06944-1>, Figure 2b
+
+或者更详细的：
+出自<https://www.sciencedirect.com/science/article/pii/S0896627318308481>, Supplemental material, Figure 3b
+from<https://www.sciencedirect.com/science/article/pii/S0896627318308481>, Supplemental material, Figure 3b
+```
+
+**内容要求：**
+
+1. **简短描述（1-2句话）**
+   - 中文：说明想要画什么，或者从哪里看到的参考图
+   - 英文：对应的英文翻译
+   - 示例：
+     ```markdown
+     文章里用的是t-SNE，我想用UMAP画这样的图。
+     The article uses t-SNE and I want to draw such a graph using UMAP.
+     ```
+
+2. **示例图**
+   - 优先使用本地图片 `example.png`
+   - 如果使用外部链接，确保链接稳定
+   - 图片应清晰展示目标效果
+
+3. **文献出处**
+   - 必须包含完整的文献链接
+   - 标注具体的 Figure 编号或页面
+   - 中英文双语标注（出自/from）
+
+4. **图的理解分析（可选但推荐）**
+   - 说明这个图展示什么内容
+   - 在什么场景下使用
+   - 解决什么问题
+   - 示例：
+     ```markdown
+     展示多个样本中多个基因的突变情况，包括但不限于SNP、indel、CNV。
+     尤其是几十上百的大样本量的情况下，一目了然，看出哪个基因在哪个人群里突变多，
+     以及多种突变类型的分布。
+
+     Display the mutations of multiple genes in multiple samples, including but not
+     limited to SNP, indel and CNV. Especially in the case of dozens or hundreds of
+     large sample volumes, it is clear at a glance which gene has more mutations in
+     which population, and the distribution of multiple types of mutations.
+     ```
+
+**完整示例：**
+
+```markdown
+## 需求描述 Requirement description
+
+用R代码画出paper里的这种瀑布图。
+
+Use R code to draw oncoplot like the one in the paper.
+
+![](example.png)
+
+出自<https://www.cell.com/cell/abstract/S0092-8674(17)30639-6>
+from<https://www.cell.com/cell/abstract/S0092-8674(17)30639-6>
+
+展示多个样本中多个基因的突变情况，包括但不限于SNP、indel、CNV。
+
+尤其是几十上百的大样本量的情况下，一目了然，看出哪个基因在哪个人群里突变多，
+以及多种突变类型的分布。
+
+Display the mutations of multiple genes in multiple samples, including but not
+limited to SNP, indel and CNV. Especially in the case of dozens or hundreds of
+large sample volumes, it is clear at a glance which gene has more mutations in
+which population, and the distribution of multiple types of mutations.
 ```
 
 #### b) 应用场景 Application scenario
