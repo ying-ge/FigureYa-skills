@@ -272,34 +272,6 @@ FigureYa Skills Collection 是一套 Claude Code 的专用技能集合，帮助�
 - **figureya-learn-statistics**：方法学习（如何使用统计）
 - **figureya-inference-thinking**：思维建立（为什么统计学存在）
 
-一个专用的 skill，帮助研究者将他们的 R 可视化代码转换为标准化的 FigureYa 模块。
-
-**功能**：
-- 将 R 代码转换为 FigureYa 标准格式
-- 创建包含所有必需文件的完整模块结构
-- 生成双语文档（中英文）
-- 确保发表级别的质量标准
-
-**使用场景**：当你想创建新的 FigureYa 模块或将现有 R 代码转换为 FigureYa 格式时使用。
-
-**文档**：参见 `skills/figureya-creator.md`
-
-### 2. FigureYa Learn Statistics (figureya-learn-statistics)
-
-一个交互式学习 skill，帮助用户通过 FigureYa 的 300+ 可视化模块学习统计学。
-
-**功能**：
-- 支持初学者、研究生、从业者三种用户类型
-- 4种学习模式：互动教程、查询助手、课程结构、项目驱动
-- 3种交互方式：交互式学习、苏格拉底式提问、可视化演示
-- 覆盖从基础到高级的统计学主题
-- 300+ FigureYa 模块的完整索引和分类
-- 中英文双语支持
-
-**使用场景**：当你想学习统计概念、寻找教学示例或通过实际代码理解统计学时使用。
-
-**文档**：参见 [STATISTICS_LEARNING_SKILL.md](STATISTICS_LEARNING_SKILL.md) 和 [QUICK_START.md](QUICK_START.md)
-
 ## 安装
 
 ### 快速安装
@@ -330,13 +302,6 @@ curl -o ~/.claude/skills/figureya-learn-statistics.md \
 # 安装 FigureYa Inference Thinking 🆕
 curl -o ~/.claude/skills/figureya-inference-thinking.md \
   https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-inference-thinking.md
-```
-curl -o ~/.claude/skills/figureya-creator.md \
-  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-creator.md
-
-# 安装 FigureYa Learn Statistics
-curl -o ~/.claude/skills/figureya-learn-statistics.md \
-  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-learn-statistics.md
 ```
 
 详细安装说明请参阅 [INSTALL.md](INSTALL.md)。
