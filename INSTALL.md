@@ -7,10 +7,13 @@
 
 ## Available Skills
 
-This repository currently contains 2 skills:
+This repository currently contains 5 skills:
 
-1. **figureya-creator** - Convert R code to standardized FigureYa modules
-2. **figureya-learn-statistics** - Learn statistics through FigureYa modules
+1. **figureya-pdf-parser** 🆕 - Extract figures from PDF and generate FigureYa modules
+2. **figureya-creator** - Convert R code to standardized FigureYa modules
+3. **figureya-learn-statistics** - Learn statistics through FigureYa modules
+4. **figureya-inference-thinking** 🆕 - Understand statistical inference thinking
+5. **figureya-bayesian-thinking** 🆕 - Build Bayesian thinking mindset
 
 ## Installation Methods
 
@@ -20,8 +23,13 @@ This repository currently contains 2 skills:
 # Clone the repository
 git clone https://github.com/ying-ge/FigureYa-skills.git
 
-# Copy all skills to Claude Code skills directory
-cp FigureYa-skills/skills/*.md ~/.claude/skills/
+# Copy all skills to Claude Code skills directory (with proper structure)
+cd FigureYa-skills
+for skill in skills/*; do
+  skill_name=$(basename "$skill")
+  mkdir -p ~/.claude/skills/"$skill_name"
+  cp "$skill"/SKILL.md ~/.claude/skills/"$skill_name"/SKILL.md
+done
 
 # Verify installation
 ls -la ~/.claude/skills/
@@ -29,31 +37,63 @@ ls -la ~/.claude/skills/
 
 ### Method 2: Install Individual Skills
 
+#### Install FigureYa PDF Parser 🆕
+
+```bash
+mkdir -p ~/.claude/skills/figureya-pdf-parser
+curl -o ~/.claude/skills/figureya-pdf-parser/SKILL.md \
+  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-pdf-parser/SKILL.md
+```
+
 #### Install FigureYa Creator
 
 ```bash
-curl -o ~/.claude/skills/figureya-creator.md \
-  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-creator.md
+mkdir -p ~/.claude/skills/figureya-creator
+curl -o ~/.claude/skills/figureya-creator/SKILL.md \
+  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-creator/SKILL.md
 ```
 
 #### Install FigureYa Learn Statistics
 
 ```bash
-curl -o ~/.claude/skills/figureya-learn-statistics.md \
-  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-learn-statistics.md
+mkdir -p ~/.claude/skills/figureya-learn-statistics
+curl -o ~/.claude/skills/figureya-learn-statistics/SKILL.md \
+  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-learn-statistics/SKILL.md
+```
+
+#### Install FigureYa Inference Thinking 🆕
+
+```bash
+mkdir -p ~/.claude/skills/figureya-inference-thinking
+curl -o ~/.claude/skills/figureya-inference-thinking/SKILL.md \
+  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-inference-thinking/SKILL.md
+```
+
+#### Install FigureYa Bayesian Thinking 🆕
+
+```bash
+mkdir -p ~/.claude/skills/figureya-bayesian-thinking
+curl -o ~/.claude/skills/figureya-bayesian-thinking/SKILL.md \
+  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-bayesian-thinking/SKILL.md
 ```
 
 ### Method 3: Manual Download from Browser
 
 1. Visit the skill file on GitHub:
-   - FigureYa Creator: [figureya-creator.md](https://github.com/ying-ge/FigureYa-skills/blob/main/skills/figureya-creator.md)
-   - FigureYa Learn Statistics: [figureya-learn-statistics.md](https://github.com/ying-ge/FigureYa-skills/blob/main/skills/figureya-learn-statistics.md)
+   - FigureYa PDF Parser: [SKILL.md](https://github.com/ying-ge/FigureYa-skills/blob/main/skills/figureya-pdf-parser/SKILL.md)
+   - FigureYa Creator: [SKILL.md](https://github.com/ying-ge/FigureYa-skills/blob/main/skills/figureya-creator/SKILL.md)
+   - FigureYa Learn Statistics: [SKILL.md](https://github.com/ying-ge/FigureYa-skills/blob/main/skills/figureya-learn-statistics/SKILL.md)
+   - FigureYa Inference Thinking: [SKILL.md](https://github.com/ying-ge/FigureYa-skills/blob/main/skills/figureya-inference-thinking/SKILL.md)
+   - FigureYa Bayesian Thinking: [SKILL.md](https://github.com/ying-ge/FigureYa-skills/blob/main/skills/figureya-bayesian-thinking/SKILL.md)
 
 2. Click the "Raw" button
 
 3. Right-click "Save As" and save to:
-   - `~/.claude/skills/figureya-creator.md`
-   - `~/.claude/skills/figureya-learn-statistics.md`
+   - `~/.claude/skills/figureya-pdf-parser/SKILL.md`
+   - `~/.claude/skills/figureya-creator/SKILL.md`
+   - `~/.claude/skills/figureya-learn-statistics/SKILL.md`
+   - `~/.claude/skills/figureya-inference-thinking/SKILL.md`
+   - `~/.claude/skills/figureya-bayesian-thinking/SKILL.md`
 
 ## Verification
 
@@ -63,12 +103,27 @@ After installation, verify the skills are available:
 # List all installed skills
 ls -la ~/.claude/skills/
 
-# You should see:
-# figureya-creator.md
-# figureya-learn-statistics.md
+# You should see directories:
+# figureya-pdf-parser/
+# figureya-creator/
+# figureya-learn-statistics/
+# figureya-inference-thinking/
+# figureya-bayesian-thinking/
+
+# Each directory should contain SKILL.md
+ls ~/.claude/skills/figureya-creator/
+# Output: SKILL.md
 ```
 
 ## Usage
+
+### Using FigureYa PDF Parser 🆕
+
+In Claude Code:
+
+```
+Use figureya-pdf-parser to extract figures from my PDF
+```
 
 ### Using FigureYa Creator
 
@@ -90,6 +145,30 @@ I want to learn statistics with FigureYa
 What is Cox regression? Which FigureYa modules should I use?
 ```
 
+### Using FigureYa Inference Thinking 🆕
+
+In Claude Code:
+
+```
+I want to understand why statistics exists
+```
+
+```
+What is p-value really?
+```
+
+### Using FigureYa Bayesian Thinking 🆕
+
+In Claude Code:
+
+```
+I want to understand Bayesian inference
+```
+
+```
+Why does p < 0.05 not mean 95% probability?
+```
+
 See [QUICK_START.md](QUICK_START.md) for more usage examples.
 
 ## System Requirements
@@ -97,23 +176,29 @@ See [QUICK_START.md](QUICK_START.md) for more usage examples.
 - Claude Code installed
 - FigureYa project cloned (recommended: `/Users/pro/FigureYa/`)
 - R and RStudio (for running FigureYa modules)
+- Python packages for PDF parser (PyMuPDF, pdfplumber, spacy, nltk, scikit-learn, pandas, numpy, pyyaml)
 
 ## Uninstallation
 
 To remove individual skills:
 
 ```bash
-# Remove FigureYa Creator
-rm ~/.claude/skills/figureya-creator.md
+# Remove FigureYa PDF Parser
+rm -rf ~/.claude/skills/figureya-pdf-parser
 
-# Remove FigureYa Learn Statistics
-rm ~/.claude/skills/figureya-learn-statistics.md
+# Remove FigureYa Creator
+rm -rf ~/.claude/skills/figureya-creator
+
+# Remove other skills
+rm -rf ~/.claude/skills/figureya-learn-statistics
+rm -rf ~/.claude/skills/figureya-inference-thinking
+rm -rf ~/.claude/skills/figureya-bayesian-thinking
 ```
 
 To remove all FigureYa skills:
 
 ```bash
-rm ~/.claude/skills/figureya-*.md
+rm -rf ~/.claude/skills/figureya-*
 ```
 
 ## Updates
@@ -128,35 +213,44 @@ cd FigureYa-skills
 git pull origin main
 
 # Re-copy skills to ~/.claude/skills/
-cp skills/*.md ~/.claude/skills/
+for skill in skills/*; do
+  skill_name=$(basename "$skill")
+  mkdir -p ~/.claude/skills/"$skill_name"
+  cp "$skill"/SKILL.md ~/.claude/skills/"$skill_name"/SKILL.md
+done
 ```
 
 Or for individual skills:
 
 ```bash
 # Backup old version (optional)
-mv ~/.claude/skills/figureya-learn-statistics.md ~/.claude/skills/figureya-learn-statistics.md.backup
+mv ~/.claude/skills/figureya-learn-statistics/SKILL.md ~/.claude/skills/figureya-learn-statistics/SKILL.md.backup
 
 # Download latest version
-curl -o ~/.claude/skills/figureya-learn-statistics.md \
-  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-learn-statistics.md
+curl -o ~/.claude/skills/figureya-learn-statistics/SKILL.md \
+  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-learn-statistics/SKILL.md
 ```
 
 ## Troubleshooting
 
 ### Skill not found after installation
 
-1. Verify the file exists:
+1. Verify the directory structure:
    ```bash
    ls -la ~/.claude/skills/
    ```
 
-2. Check file permissions:
+2. Check if SKILL.md exists:
    ```bash
-   chmod 644 ~/.claude/skills/figureya-*.md
+   ls ~/.claude/skills/figureya-creator/
    ```
 
-3. Restart Claude Code
+3. Check file permissions:
+   ```bash
+   chmod 644 ~/.claude/skills/*/SKILL.md
+   ```
+
+4. Restart Claude Code
 
 ### Claude Code can't find FigureYa modules
 
@@ -167,6 +261,8 @@ The skills assume FigureYa is installed at `/Users/pro/FigureYa/`. If your Figur
 - **README**: [README.md](README.md) - Project overview
 - **Quick Start**: [QUICK_START.md](QUICK_START.md) - Usage examples
 - **Statistics Skill Details**: [STATISTICS_LEARNING_SKILL.md](STATISTICS_LEARNING_SKILL.md)
+- **Inference Thinking**: [INFERENCE_THINKING_SKILL.md](INFERENCE_THINKING_SKILL.md) 🆕
+- **Bayesian Thinking**: [BAYESIAN_THINKING_SKILL.md](BAYESIAN_THINKING_SKILL.md) 🆕
 
 ## Feedback and Contributions
 
@@ -186,10 +282,13 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
 
 ## 可用的 Skills
 
-本仓库目前包含 2 个 skills：
+本仓库目前包含 5 个 skills：
 
-1. **figureya-creator** - 将 R 代码转换为标准化的 FigureYa 模块
-2. **figureya-learn-statistics** - 通过 FigureYa 模块学习统计学
+1. **figureya-pdf-parser** 🆕 - 从 PDF 提取图表并生成 FigureYa 模块
+2. **figureya-creator** - 将 R 代码转换为标准化的 FigureYa 模块
+3. **figureya-learn-statistics** - 通过 FigureYa 模块学习统计学
+4. **figureya-inference-thinking** 🆕 - 理解统计推断思维
+5. **figureya-bayesian-thinking** 🆕 - 建立贝叶斯思维
 
 ## 安装方法
 
@@ -199,8 +298,13 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
 # 克隆仓库
 git clone https://github.com/ying-ge/FigureYa-skills.git
 
-# 复制所有 skills 到 Claude Code skills 目录
-cp FigureYa-skills/skills/*.md ~/.claude/skills/
+# 复制所有 skills 到 Claude Code skills 目录（带正确的目录结构）
+cd FigureYa-skills
+for skill in skills/*; do
+  skill_name=$(basename "$skill")
+  mkdir -p ~/.claude/skills/"$skill_name"
+  cp "$skill"/SKILL.md ~/.claude/skills/"$skill_name"/SKILL.md
+done
 
 # 验证安装
 ls -la ~/.claude/skills/
@@ -208,31 +312,63 @@ ls -la ~/.claude/skills/
 
 ### 方法 2：单独安装
 
+#### 安装 FigureYa PDF Parser 🆕
+
+```bash
+mkdir -p ~/.claude/skills/figureya-pdf-parser
+curl -o ~/.claude/skills/figureya-pdf-parser/SKILL.md \
+  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-pdf-parser/SKILL.md
+```
+
 #### 安装 FigureYa Creator
 
 ```bash
-curl -o ~/.claude/skills/figureya-creator.md \
-  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-creator.md
+mkdir -p ~/.claude/skills/figureya-creator
+curl -o ~/.claude/skills/figureya-creator/SKILL.md \
+  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-creator/SKILL.md
 ```
 
 #### 安装 FigureYa Learn Statistics
 
 ```bash
-curl -o ~/.claude/skills/figureya-learn-statistics.md \
-  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-learn-statistics.md
+mkdir -p ~/.claude/skills/figureya-learn-statistics
+curl -o ~/.claude/skills/figureya-learn-statistics/SKILL.md \
+  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-learn-statistics/SKILL.md
+```
+
+#### 安装 FigureYa Inference Thinking 🆕
+
+```bash
+mkdir -p ~/.claude/skills/figureya-inference-thinking
+curl -o ~/.claude/skills/figureya-inference-thinking/SKILL.md \
+  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-inference-thinking/SKILL.md
+```
+
+#### 安装 FigureYa Bayesian Thinking 🆕
+
+```bash
+mkdir -p ~/.claude/skills/figureya-bayesian-thinking
+curl -o ~/.claude/skills/figureya-bayesian-thinking/SKILL.md \
+  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-bayesian-thinking/SKILL.md
 ```
 
 ### 方法 3：从浏览器手动下载
 
 1. 访问 GitHub 上的 skill 文件：
-   - FigureYa Creator: [figureya-creator.md](https://github.com/ying-ge/FigureYa-skills/blob/main/skills/figureya-creator.md)
-   - FigureYa Learn Statistics: [figureya-learn-statistics.md](https://github.com/ying-ge/FigureYa-skills/blob/main/skills/figureya-learn-statistics.md)
+   - FigureYa PDF Parser: [SKILL.md](https://github.com/ying-ge/FigureYa-skills/blob/main/skills/figureya-pdf-parser/SKILL.md)
+   - FigureYa Creator: [SKILL.md](https://github.com/ying-ge/FigureYa-skills/blob/main/skills/figureya-creator/SKILL.md)
+   - FigureYa Learn Statistics: [SKILL.md](https://github.com/ying-ge/FigureYa-skills/blob/main/skills/figureya-learn-statistics/SKILL.md)
+   - FigureYa Inference Thinking: [SKILL.md](https://github.com/ying-ge/FigureYa-skills/blob/main/skills/figureya-inference-thinking/SKILL.md)
+   - FigureYa Bayesian Thinking: [SKILL.md](https://github.com/ying-ge/FigureYa-skills/blob/main/skills/figureya-bayesian-thinking/SKILL.md)
 
 2. 点击 "Raw" 按钮
 
 3. 右键 "另存为" 保存到：
-   - `~/.claude/skills/figureya-creator.md`
-   - `~/.claude/skills/figureya-learn-statistics.md`
+   - `~/.claude/skills/figureya-pdf-parser/SKILL.md`
+   - `~/.claude/skills/figureya-creator/SKILL.md`
+   - `~/.claude/skills/figureya-learn-statistics/SKILL.md`
+   - `~/.claude/skills/figureya-inference-thinking/SKILL.md`
+   - `~/.claude/skills/figureya-bayesian-thinking/SKILL.md`
 
 ## 验证安装
 
@@ -242,12 +378,27 @@ curl -o ~/.claude/skills/figureya-learn-statistics.md \
 # 列出所有已安装的 skills
 ls -la ~/.claude/skills/
 
-# 你应该看到：
-# figureya-creator.md
-# figureya-learn-statistics.md
+# 你应该看到目录：
+# figureya-pdf-parser/
+# figureya-creator/
+# figureya-learn-statistics/
+# figureya-inference-thinking/
+# figureya-bayesian-thinking/
+
+# 每个目录应该包含 SKILL.md
+ls ~/.claude/skills/figureya-creator/
+# 输出：SKILL.md
 ```
 
 ## 使用方法
+
+### 使用 FigureYa PDF Parser 🆕
+
+在 Claude Code 中：
+
+```
+用 figureya-pdf-parser 从我的 PDF 中提取图表
+```
 
 ### 使用 FigureYa Creator
 
@@ -269,6 +420,30 @@ ls -la ~/.claude/skills/
 什么是 Cox 回归？应该用哪些 FigureYa 模块？
 ```
 
+### 使用 FigureYa Inference Thinking 🆕
+
+在 Claude Code 中：
+
+```
+我想理解统计学为什么存在
+```
+
+```
+p-value 到底是什么？
+```
+
+### 使用 FigureYa Bayesian Thinking 🆕
+
+在 Claude Code 中：
+
+```
+我想理解贝叶斯推断
+```
+
+```
+为什么 p < 0.05 不意味着 95% 概率？
+```
+
 更多使用示例请参阅 [QUICK_START.md](QUICK_START.md)。
 
 ## 系统要求
@@ -276,23 +451,29 @@ ls -la ~/.claude/skills/
 - 已安装 Claude Code
 - 已克隆 FigureYa 项目（推荐路径：`/Users/pro/FigureYa/`）
 - 已安装 R 和 RStudio（用于运行 FigureYa 模块）
+- PDF parser 所需的 Python 包（PyMuPDF, pdfplumber, spacy, nltk, scikit-learn, pandas, numpy, pyyaml）
 
 ## 卸载
 
 删除单个 skill：
 
 ```bash
-# 删除 FigureYa Creator
-rm ~/.claude/skills/figureya-creator.md
+# 删除 FigureYa PDF Parser
+rm -rf ~/.claude/skills/figureya-pdf-parser
 
-# 删除 FigureYa Learn Statistics
-rm ~/.claude/skills/figureya-learn-statistics.md
+# 删除 FigureYa Creator
+rm -rf ~/.claude/skills/figureya-creator
+
+# 删除其他 skills
+rm -rf ~/.claude/skills/figureya-learn-statistics
+rm -rf ~/.claude/skills/figureya-inference-thinking
+rm -rf ~/.claude/skills/figureya-bayesian-thinking
 ```
 
 删除所有 FigureYa skills：
 
 ```bash
-rm ~/.claude/skills/figureya-*.md
+rm -rf ~/.claude/skills/figureya-*
 ```
 
 ## 更新
@@ -307,35 +488,44 @@ cd FigureYa-skills
 git pull origin main
 
 # 重新复制 skills 到 ~/.claude/skills/
-cp skills/*.md ~/.claude/skills/
+for skill in skills/*; do
+  skill_name=$(basename "$skill")
+  mkdir -p ~/.claude/skills/"$skill_name"
+  cp "$skill"/SKILL.md ~/.claude/skills/"$skill_name"/SKILL.md
+done
 ```
 
 或者单独更新某个 skill：
 
 ```bash
 # 备份旧版本（可选）
-mv ~/.claude/skills/figureya-learn-statistics.md ~/.claude/skills/figureya-learn-statistics.md.backup
+mv ~/.claude/skills/figureya-learn-statistics/SKILL.md ~/.claude/skills/figureya-learn-statistics/SKILL.md.backup
 
 # 下载最新版本
-curl -o ~/.claude/skills/figureya-learn-statistics.md \
-  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-learn-statistics.md
+curl -o ~/.claude/skills/figureya-learn-statistics/SKILL.md \
+  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-learn-statistics/SKILL.md
 ```
 
 ## 故障排除
 
 ### 安装后找不到 skill
 
-1. 验证文件存在：
+1. 验证目录结构：
    ```bash
    ls -la ~/.claude/skills/
    ```
 
-2. 检查文件权限：
+2. 检查 SKILL.md 是否存在：
    ```bash
-   chmod 644 ~/.claude/skills/figureya-*.md
+   ls ~/.claude/skills/figureya-creator/
    ```
 
-3. 重启 Claude Code
+3. 检查文件权限：
+   ```bash
+   chmod 644 ~/.claude/skills/*/SKILL.md
+   ```
+
+4. 重启 Claude Code
 
 ### Claude Code 找不到 FigureYa 模块
 
@@ -346,6 +536,8 @@ curl -o ~/.claude/skills/figureya-learn-statistics.md \
 - **README**: [README.md](README.md) - 项目概述
 - **快速开始**: [QUICK_START.md](QUICK_START.md) - 使用示例
 - **统计学 Skill 详情**: [STATISTICS_LEARNING_SKILL.md](STATISTICS_LEARNING_SKILL.md)
+- **统计推断思维**: [INFERENCE_THINKING_SKILL.md](INFERENCE_THINKING_SKILL.md) 🆕
+- **贝叶斯思维**: [BAYESIAN_THINKING_SKILL.md](BAYESIAN_THINKING_SKILL.md) 🆕
 
 ## 反馈和贡献
 
