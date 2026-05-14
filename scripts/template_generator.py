@@ -292,19 +292,29 @@ class TemplateGenerator:
         print(f"Rmd file updated: {rmd_file}")
 
     def batch_generate_modules(self, charts_info: List[Dict[str, Any]],
-                              output_base_dir: str) -> List[Path]:
+                              output_base_dir: str) -> Dict[str, Any]:
         """
-        批量生成模块
-        Batch generate modules
+        批量生成模块（增强版）
+        Batch generate modules (enhanced)
 
         参数 | Parameters:
             charts_info: 图表信息列表 | List of chart information
             output_base_dir: 输出基础目录 | Output base directory
 
         返回 | Returns:
-            新模块路径列表 | List of new module paths
+            包含详细报告的字典 | Dictionary containing detailed report
         """
-        results = []
+        results = {
+            "success": [],
+            "failed": [],
+            "partial": [],
+            "report_path": None
+        }
+
+        # 创建报告目录
+        # Create report directory
+        report_dir = Path(output_base_dir) / "reports"
+        report_dir.mkdir(parents=True, exist_ok=True)
 
         print(f"Batch generating {len(charts_info)} modules...")
 
@@ -312,34 +322,197 @@ class TemplateGenerator:
             chart_type = chart_info.get("chart_type", "unknown")
             figure_number = chart_info.get("figure_number", i)
 
-            print(f"[{i}/{len(charts_info)}] Generating module for Figure {figure_number} ({chart_type})...")
+            print(f"[{i}/{len(charts_info)}] Processing Figure {figure_number} ({chart_type})...")
 
             try:
-                # 获取推荐模块
-                # Get recommended module
-                recommended_module = chart_info.get("recommended_module")
+                recommended_module_info = chart_info.get("recommended_module", {})
 
-                if not recommended_module:
-                    print(f"  Warning: No recommended module found, skipping...")
-                    continue
+                # 检查是否找到了匹配的模块
+                # Check if a matching module was found
+                if not recommended_module_info.get("found", False):
+                    # 未找到模块，使用未匹配处理器
+                    # No module found, use unmatched chart handler
+                    from unmatched_chart_handler import UnmatchedChartHandler
 
-                # 生成新模块
-                # Generate new module
-                new_module_path = self.generate_new_module(
-                    recommended_module,
-                    chart_info,
-                    output_base_dir
-                )
+                    handler = UnmatchedChartHandler()
+                    handler_result = handler.handle_unmatched_chart(chart_info, output_base_dir)
 
-                results.append(new_module_path)
+                    strategy = handler_result.get("strategy", "log_only")
+
+                    if strategy == "create_skeleton":
+                        results["partial"].append({
+                            "figure": figure_number,
+                            "chart_type": chart_type,
+                            "skeleton_path": handler_result.get("skeleton_path"),
+                            "reason": "No matching module found",
+                            "confidence": chart_info.get("confidence", 0)
+                        })
+                        print(f"  ⚠️  Created skeleton module")
+
+                    elif strategy == "provide_guide":
+                        results["failed"].append({
+                            "figure": figure_number,
+                            "chart_type": chart_type,
+                            "reason": "No matching module found",
+                            "confidence": chart_info.get("confidence", 0),
+                            "suggestions": handler_result.get("next_steps", [])
+                        })
+                        print(f"  ⚠️  No module found, guide provided")
+
+                    else:  # log_only
+                        results["failed"].append({
+                            "figure": figure_number,
+                            "chart_type": chart_type,
+                            "reason": "No matching module found (low confidence)",
+                            "confidence": chart_info.get("confidence", 0)
+                        })
+                        print(f"  ⚠️  No module found (low confidence)")
+
+                else:
+                    # 找到了匹配的模块，正常生成
+                    # Found matching module, generate normally
+                    recommended_module = recommended_module_info.get("module")
+
+                    new_module_path = self.generate_new_module(
+                        recommended_module,
+                        chart_info,
+                        output_base_dir
+                    )
+
+                    results["success"].append({
+                        "figure": figure_number,
+                        "chart_type": chart_type,
+                        "module_path": str(new_module_path)
+                    })
+                    print(f"  ✓ Module generated")
 
             except Exception as e:
-                print(f"  Error: Failed to generate module: {e}")
+                results["failed"].append({
+                    "figure": figure_number,
+                    "chart_type": chart_type,
+                    "reason": f"Error: {str(e)}",
+                    "confidence": chart_info.get("confidence", 0)
+                })
+                print(f"  ✗ Error: {e}")
                 continue
 
-        print(f"Completed generating {len(results)} modules")
+        # 生成详细报告
+        # Generate detailed report
+        report_path = self._generate_report(results, report_dir)
+        results["report_path"] = str(report_path)
+
+        # 打印摘要
+        # Print summary
+        print(f"\n{'='*60}")
+        print(f"Generation Summary:")
+        print(f"{'='*60}")
+        print(f"Total: {len(charts_info)}")
+        print(f"✓ Success: {len(results['success'])}")
+        print(f"⚠️  Partial (skeleton): {len(results['partial'])}")
+        print(f"✗ Failed: {len(results['failed'])}")
+        print(f"{'='*60}")
+        print(f"\nDetailed report: {report_path}")
 
         return results
+
+    def _generate_report(self, results: Dict[str, Any], report_dir: Path) -> Path:
+        """
+        生成详细报告
+        Generate detailed report
+
+        参数 | Parameters:
+            results: 结果字典 | Results dictionary
+            report_dir: 报告目录 | Report directory
+
+        返回 | Returns:
+            报告文件路径 | Report file path
+        """
+        from datetime import datetime
+
+        report_path = report_dir / f"generation_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md"
+
+        with open(report_path, "w", encoding="utf-8") as f:
+            f.write("# FigureYa 模块生成报告 | FigureYa Module Generation Report\n\n")
+            f.write(f"**生成时间 | Generated**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+
+            # 执行摘要
+            # Executive summary
+            f.write("## 执行摘要 | Executive Summary\n\n")
+            total = len(results["success"]) + len(results["partial"]) + len(results["failed"])
+            f.write(f"- 总图表数 | Total charts: {total}\n")
+            f.write(f"- 成功生成 | Success: {len(results['success'])}\n")
+            f.write(f"- 需要手动完成 | Partial (skeleton): {len(results['partial'])}\n")
+            f.write(f"- 失败 | Failed: {len(results['failed'])}\n\n")
+
+            # 成功列表
+            # Success list
+            if results["success"]:
+                f.write("## ✅ 成功生成的模块 | Successfully Generated Modules\n\n")
+                for item in results["success"]:
+                    f.write(f"### Figure {item['figure']}: {item['chart_type']}\n\n")
+                    f.write(f"- **路径 | Path**: `{item['module_path']}`\n")
+                    f.write(f"- **状态 | Status**: ✓ 完全生成 | Fully generated\n\n")
+
+            # 部分完成列表
+            # Partial completion list
+            if results["partial"]:
+                f.write("## ⚠️  需要手动完成的模块 | Modules Requiring Manual Completion\n\n")
+                f.write("这些模块已生成骨架，但需要手动完成代码部分：\n")
+                f.write("These modules have skeleton generated but require manual code completion:\n\n")
+
+                for item in results["partial"]:
+                    f.write(f"### Figure {item['figure']}: {item['chart_type']}\n\n")
+                    f.write(f"- **骨架路径 | Skeleton path**: `{item['skeleton_path']}`\n")
+                    f.write(f"- **原因 | Reason**: {item['reason']}\n")
+                    f.write(f"- **置信度 | Confidence**: {item.get('confidence', 0):.2f}\n")
+                    f.write(f"- **状态 | Status**: ⚠️  需要手动完成 | Requires manual completion\n\n")
+                    f.write("**下一步 | Next steps**:\n")
+                    f.write("1. 查看骨架模块目录 | Review skeleton module directory\n")
+                    f.write("2. 阅读 README.md 了解完成步骤 | Read README.md for completion steps\n")
+                    f.write("3. 完成 Rmd 文件中的 TODO 部分 | Complete TODO sections in Rmd file\n\n")
+
+            # 失败列表
+            # Failed list
+            if results["failed"]:
+                f.write("## ❌ 失败的图表 | Failed Charts\n\n")
+                for item in results["failed"]:
+                    f.write(f"### Figure {item['figure']}: {item['chart_type']}\n\n")
+                    f.write(f"- **原因 | Reason**: {item['reason']}\n")
+                    f.write(f"- **置信度 | Confidence**: {item.get('confidence', 0):.2f}\n")
+                    f.write(f"- **状态 | Status**: ✗ 失败 | Failed\n")
+
+                    if item.get("suggestions"):
+                        f.write("\n**建议 | Suggestions**:\n")
+                        for suggestion in item["suggestions"]:
+                            f.write(f"- {suggestion}\n")
+                    f.write("\n")
+
+            # 后续步骤
+            # Next steps
+            f.write("## 后续步骤 | Next Steps\n\n")
+            f.write("1. **检查成功生成的模块 | Check successfully generated modules**\n")
+            f.write("   - 运行 R Markdown 验证输出 | Run R Markdown to verify output\n")
+            f.write("   - 调整参数优化效果 | Adjust parameters to optimize results\n\n")
+
+            if results["partial"]:
+                f.write("2. **完成骨架模块 | Complete skeleton modules**\n")
+                f.write("   - 每个骨架模块都有详细的 README.md | Each skeleton has detailed README.md\n")
+                f.write("   - 按照指南完成 TODO 部分 | Complete TODO sections following guide\n")
+                f.write("   - 准备示例数据 | Prepare example data\n\n")
+
+            if results["failed"]:
+                f.write("3. **处理失败的图表 | Handle failed charts**\n")
+                f.write("   - 使用 `figureya-creator` skill 手动创建 | Use `figureya-creator` skill to create manually\n")
+                f.write("   - 或者考虑其他可视化工具 | Or consider other visualization tools\n")
+                f.write("   - 向 FigureYa 团队反馈新图表类型 | Feedback new chart types to FigureYa team\n\n")
+
+            f.write("---\n\n")
+            f.write("**需要帮助？| Need Help?**\n\n")
+            f.write("- 查看现有 FigureYa 模块作为参考 | Review existing FigureYa modules for reference\n")
+            f.write("- 使用 `figureya-creator` skill 寻求帮助 | Use `figureya-creator` skill for help\n")
+            f.write("- 在 GitHub 上提 issue | Open an issue on GitHub\n")
+
+        return report_path
 
 
 def main():

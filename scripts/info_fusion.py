@@ -243,21 +243,96 @@ class InfoFusion:
 
         return evidence
 
-    def _get_recommended_module(self, chart_type: str) -> str:
+    def _get_recommended_module(self, chart_type: str) -> Dict[str, Any]:
         """
-        获取推荐的 FigureYa 模块
-        Get recommended FigureYa module
+        获取推荐的 FigureYa 模块（增强版）
+        Get recommended FigureYa module (enhanced)
 
         参数 | Parameters:
             chart_type: 图表类型 | Chart type
 
         返回 | Returns:
-            模块名称 | Module name
+            包含模块信息和相似模块的字典
+            Dictionary containing module info and similar modules
         """
+        # 精确匹配
+        # Exact match
         for category in self.chart_config.values():
             if isinstance(category, dict) and chart_type in category:
-                return category[chart_type].get("module", "Unknown")
-        return "Unknown"
+                return {
+                    "module": category[chart_type].get("module"),
+                    "found": True,
+                    "confidence": 1.0,
+                    "similar_modules": []
+                }
+
+        # 未找到精确匹配，查找相似模块
+        # No exact match found, search for similar modules
+        similar_modules = self._find_similar_modules(chart_type)
+
+        return {
+            "module": None,
+            "found": False,
+            "confidence": 0.0,
+            "similar_modules": similar_modules
+        }
+
+    def _find_similar_modules(self, chart_type: str) -> List[Dict[str, str]]:
+        """
+        查找相似的模块
+        Find similar modules
+
+        参数 | Parameters:
+            chart_type: 图表类型 | Chart type
+
+        返回 | Returns:
+            相似模块列表 | List of similar modules
+        """
+        similar = []
+        chart_type_lower = chart_type.lower()
+
+        for category in self.chart_config.values():
+            if isinstance(category, dict):
+                for mod_chart_type, mod_info in category.items():
+                    if isinstance(mod_info, dict) and "name" in mod_info:
+                        # 检查关键词重叠
+                        # Check keyword overlap
+                        mod_chart_type_lower = mod_chart_type.lower()
+
+                        # 包含关系
+                        # Containment relationship
+                        if chart_type_lower in mod_chart_type_lower or \
+                           mod_chart_type_lower in chart_type_lower:
+                            similar.append({
+                                "chart_type": mod_chart_type,
+                                "module": mod_info.get("module"),
+                                "name": mod_info.get("name"),
+                                "match_reason": "keyword_overlap"
+                            })
+
+                        # 关键词匹配
+                        # Keyword matching
+                        keywords = mod_info.get("keywords", [])
+                        for keyword in keywords:
+                            if keyword.lower() in chart_type_lower:
+                                similar.append({
+                                    "chart_type": mod_chart_type,
+                                    "module": mod_info.get("module"),
+                                    "name": mod_info.get("name"),
+                                    "match_reason": f"keyword_match_{keyword}"
+                                })
+                                break
+
+        # 去重并限制数量
+        # Deduplicate and limit count
+        seen = set()
+        unique_similar = []
+        for item in similar:
+            if item["module"] not in seen:
+                unique_similar.append(item)
+                seen.add(item["module"])
+
+        return unique_similar[:5]  # 返回前5个相似模块
 
     def _get_decision_level(self, score: float) -> str:
         """

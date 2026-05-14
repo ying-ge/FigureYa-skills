@@ -299,6 +299,167 @@ low_confidence = 0.50             # 低置信度
    - 根据具体需求调整参数 | Adjust parameters based on specific needs
    - 验证输出结果 | Verify output results
 
+## 处理未匹配的图表 | Handling Unmatched Charts
+
+如果识别出的图表没有找到合适的 FigureYa 模块，系统会智能处理：
+If a recognized chart doesn't have a matching FigureYa module, the system will handle it intelligently:
+
+### 三种处理策略 | Three Handling Strategies
+
+根据图表的识别置信度和信息丰富度，系统会采用不同的策略：
+Based on chart recognition confidence and information richness, the system uses different strategies:
+
+#### 策略 1：创建骨架模块（置信度 ≥ 0.7 且有工具信息）
+#### Strategy 1: Create Skeleton Module (confidence ≥ 0.7 with tool info)
+
+当系统高度确信图表类型，但 FigureYa 库中没有对应模块时：
+When the system is confident about the chart type but there's no corresponding module in FigureYa:
+
+- 自动生成模块骨架 | Automatically generate module skeleton
+- 包含标准 R Markdown 结构 | Include standard R Markdown structure
+- 填充识别到的信息（图表类型、R 包等）| Fill identified information (chart type, R packages, etc.)
+- 标记需要手动完成的部分 | Mark parts requiring manual completion
+- 提供详细的完成指南（README.md）| Provide detailed completion guide (README.md)
+
+**输出示例 | Output Example**:
+```
+⚠️  未找到匹配的模块，创建骨架模块...
+✓ 骨架已创建：FigureYa_Figure4_forest_plot_skeleton/
+  - FigureYa_Figure4_forest_plot_skeleton.Rmd
+  - install_dependencies.R
+  - README.md（完成指南）
+  - reference_image.png
+
+📝 请查看 README.md 了解如何完成这个模块
+```
+
+#### 策略 2：提供手动创建指南（置信度 0.5-0.7）
+#### Strategy 2: Provide Manual Creation Guide (confidence 0.5-0.7)
+
+当识别置信度中等，或缺少工具信息时：
+When recognition confidence is medium, or tool information is missing:
+
+- 分析图表特征 | Analyze chart features
+- 识别到的 R 包和统计方法 | Identified R packages and statistical methods
+- 推荐相似模块作为参考 | Recommend similar modules as reference
+- 提供详细的分步创建指南 | Provide detailed step-by-step creation guide
+
+**输出示例 | Output Example**:
+```
+⚠️  未找到匹配的模块，提供手动创建指南...
+
+手动创建指南 | Manual Creation Guide:
+1. 使用 figureya-creator skill
+2. 提供参考图片: output/figures/figure_page5_2.png
+3. 说明：识别为 forest plot，置信度 0.65
+4. 识别到的 R 包：ggplot2, forestplot
+
+参考模块 | Reference modules:
+- FigureYa08survival（类似的结构）
+- FigureYa03volcano（参数设置参考）
+```
+
+#### 策略 3：仅记录信息（置信度 < 0.5）
+#### Strategy 3: Log Information Only (confidence < 0.5)
+
+当识别置信度很低时：
+When recognition confidence is very low:
+
+- 记录到失败报告 | Log to failure report
+- 保存识别信息供参考 | Save identified information for reference
+- 不生成任何文件 | Do not generate any files
+- 建议人工审查 | Suggest manual review
+
+### 详细报告 | Detailed Report
+
+每次运行都会生成详细的报告，包含：
+Every run generates a detailed report including:
+
+1. **执行摘要 | Executive Summary**
+   - 总图表数 | Total charts
+   - 成功生成数量 | Number of successful generations
+   - 需要手动完成数量 | Number requiring manual completion
+   - 失败数量 | Number of failures
+
+2. **成功列表 | Success List**
+   - 模块路径 | Module paths
+   - 图表类型 | Chart types
+
+3. **骨架模块列表 | Skeleton Module List**
+   - 骨架路径 | Skeleton paths
+   - 完成指南 | Completion guides
+   - 下一步步骤 | Next steps
+
+4. **失败列表 | Failed List**
+   - 失败原因 | Failure reasons
+   - 建议和解决方案 | Suggestions and solutions
+
+**报告示例 | Report Example**:
+```
+生成报告：output/reports/generation_report_20260514_153022.md
+
+执行摘要 | Executive Summary:
+- 总图表数 | Total: 12
+- 成功生成 | Success: 9
+- 需要手动完成 | Partial: 2
+- 失败 | Failed: 1
+
+✅ 成功生成的模块 | Successfully Generated:
+- Figure 1: volcano plot (FigureYa_Figure1_volcano_plot/)
+- Figure 2: kaplan_meier (FigureYa_Figure2_km_survival/)
+- ...
+
+⚠️  需要手动完成的模块 | Modules Requiring Manual Completion:
+- Figure 4: forest_plot
+  骨架路径 | Skeleton: FigureYa_Figure4_forest_plot_skeleton/
+  原因 | Reason: No matching module found
+  置信度 | Confidence: 0.75
+  说明 | Note: 已生成骨架，请查看 README.md
+
+- Figure 7: network_diagram
+  原因 | Reason: No matching module found
+  置信度 | Confidence: 0.60
+  说明 | Note: 已提供手动创建指南
+
+❌ 失败的图表 | Failed Charts:
+- Figure 10: unknown_chart
+  原因 | Reason: Chart type not supported
+  置信度 | Confidence: 0.35
+```
+
+### 完成骨架模块 | Completing Skeleton Modules
+
+对于生成的骨架模块，完成步骤如下：
+For generated skeleton modules, follow these steps:
+
+1. **理解需求 | Understand Requirements**
+   - 查看参考图片 | Review reference image
+   - 识别关键特征 | Identify key features
+   - 确定数据结构 | Determine data structure
+
+2. **准备数据 | Prepare Data**
+   - 使用真实示例数据 | Use real example data
+   - 创建 CSV 文件 | Create CSV file
+   - 添加列名说明 | Add column descriptions
+
+3. **编写代码 | Write Code**
+   - 完成 Rmd 中的 TODO 部分 | Complete TODO sections in Rmd
+   - 参考 R 包文档 | Reference R package documentation
+   - 使用 ggplot2 标准语法 | Use ggplot2 standard syntax
+
+4. **测试验证 | Test and Validate**
+   - 运行 R Markdown | Run R Markdown
+   - 检查输出质量 | Check output quality
+   - 调整参数优化 | Adjust parameters to optimize
+
+5. **完善文档 | Refine Documentation**
+   - 删除骨架说明章节 | Remove skeleton notice sections
+   - 完善应用场景 | Complete application scenarios
+   - 添加示例图片 | Add example images
+
+详细的完成指南会在每个骨架模块的 `README.md` 中提供。
+Detailed completion guides are provided in the `README.md` of each skeleton module.
+
 ## 错误处理 | Error Handling
 
 如果遇到以下情况：
