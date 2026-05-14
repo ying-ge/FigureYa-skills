@@ -153,6 +153,41 @@ A deep-dive skill that uses volcano plots to understand the fundamental nature o
 - **figureya-learn-statistics**: Method learning (how to use statistics)
 - **figureya-inference-thinking**: Thinking foundation (why statistics exists)
 
+### 5. FigureYa Bayesian Thinking (figureya-bayesian-thinking) 🆕
+
+A thinking-restructuring skill that transforms "significance thinking" (p-value < 0.05) into "Bayesian uncertainty updating thinking" through biomedical data examples.
+
+**Features**:
+- **Mindset Transformation**: From binary (significant/not significant) to continuous (posterior probability distribution)
+- **7 Core Modules**: Medical testing, Bayes' formula, FDR interpretation, Empirical Bayes (limma), prior selection, Bayesian workflow, practice exercises
+- **Intuitive Examples**: Start with medical testing (16.7% vs 95% misconception), then apply to gene expression analysis
+- **Connect to Real Tools**: limma's Empirical Bayes, FDR's Bayesian interpretation, full Bayesian analysis (BAPC module)
+- **From Intuition to Practice**: Understanding conditional probability reversal → calculating posterior probabilities → real data analysis
+- **Bilingual support**: Full Chinese/English content
+
+**Core Topics Covered**:
+1. **Thinking Pattern Comparison**: Why p = 0.03 ≠ 97% probability
+2. **Bayes' Formula**: From medical testing to gene differential expression
+3. **FDR's Bayesian Interpretation**: Why multiple testing needs correction
+4. **Empirical Bayes**: limma's small sample magic
+5. **Prior Selection**: How to encode biological knowledge
+6. **Bayesian Workflow**: Complete pipeline from data to decision
+7. **Practice Exercises**: Re-interpreting published results with Bayesian thinking
+
+**Use when**: You want to understand Bayesian inference, transition from frequentist to Bayesian thinking, learn how to incorporate prior knowledge, or understand why limma performs well with small samples.
+
+**Documentation**: See [BAYESIAN_THINKING_SKILL.md](BAYESIAN_THINKING_SKILL.md)
+
+**Difference from other skills**:
+- **figureya-learn-statistics**: Method learning (how to use statistics)
+- **figureya-inference-thinking**: Understanding statistical inference (frequentist + Bayesian)
+- **figureya-bayesian-thinking**: Specialized Bayesian training (mindset restructuring)
+
+**Recommended Learning Order**:
+1. figureya-inference-thinking (build statistical foundation)
+2. figureya-bayesian-thinking (deepen Bayesian thinking)
+3. figureya-learn-statistics (learn specific methods as needed)
+
 ## Installation
 
 ### Quick Install
@@ -187,6 +222,10 @@ curl -o ~/.claude/skills/figureya-learn-statistics.md \
 # Install FigureYa Inference Thinking 🆕
 curl -o ~/.claude/skills/figureya-inference-thinking.md \
   https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-inference-thinking.md
+
+# Install FigureYa Bayesian Thinking 🆕
+curl -o ~/.claude/skills/figureya-bayesian-thinking.md \
+  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-bayesian-thinking.md
 ```
 
 See [INSTALL.md](INSTALL.md) for detailed installation instructions.
@@ -241,6 +280,28 @@ Why do we need statistical inference?
 
 This skill will guide you through deep conceptual understanding using volcano plots as the entry point.
 
+### Using FigureYa Bayesian Thinking 🆕
+
+In Claude Code, use any of these prompts:
+
+```
+I want to understand Bayesian inference
+```
+
+```
+Why does p < 0.05 not mean 95% probability?
+```
+
+```
+How do I incorporate biological prior knowledge?
+```
+
+```
+Use figureya-bayesian-thinking to help me understand Bayesian inference
+```
+
+This skill will restructure your thinking from "significance-based" to "Bayesian uncertainty updating" through biomedical examples like medical testing and gene expression analysis.
+
 ### Using FigureYa Learn Statistics
 
 In Claude Code, use any of these prompts:
@@ -264,14 +325,17 @@ See [QUICK_START.md](QUICK_START.md) for more usage examples.
 ```
 FigureYa-skills/
 ├── skills/
+│   ├── figureya-pdf-parser.md              # PDF parser skill 🆕
 │   ├── figureya-creator.md                 # FigureYa module creator skill
 │   ├── figureya-learn-statistics.md        # Statistics learning skill
-│   └── figureya-inference-thinking.md      # Statistical inference thinking skill 🆕
+│   ├── figureya-inference-thinking.md      # Statistical inference thinking skill 🆕
+│   └── figureya-bayesian-thinking.md       # Bayesian thinking skill 🆕
 ├── docs/                                   # Additional documentation
 ├── INSTALL.md                              # Installation guide
 ├── QUICK_START.md                          # Quick start guide
 ├── STATISTICS_LEARNING_SKILL.md           # Detailed skill documentation
 ├── INFERENCE_THINKING_SKILL.md            # Inference thinking skill documentation 🆕
+├── BAYESIAN_THINKING_SKILL.md             # Bayesian thinking skill documentation 🆕
 └── README.md                               # This file
 ```
 
@@ -456,6 +520,41 @@ Figure 3: 视觉(热图 0.68) + 文本(无匹配) → 最终：热图(0.68) → 
 - **figureya-learn-statistics**：方法学习（如何使用统计）
 - **figureya-inference-thinking**：思维建立（为什么统计学存在）
 
+### 5. FigureYa Bayesian Thinking (figureya-bayesian-thinking) 🆕
+
+一个思维重构 skill，将"显著性思维"（p-value < 0.05）转化为"贝叶斯式的不确定性更新思维"，通过生物医学数据实例建立贝叶斯直觉。
+
+**功能**：
+- **思维模式重构**：从二元（显著/不显著）到连续（后验概率分布）
+- **7 个核心模块**：思维对比、贝叶斯公式、FDR 解释、Empirical Bayes（limma）、先验选择、贝叶斯工作流、实践练习
+- **直观示例**：从医疗检测（16.7% vs 95% 误解）开始，再应用到基因差异表达分析
+- **连接实际工具**：limma 的 Empirical Bayes、FDR 的贝叶斯解释、完整贝叶斯分析（BAPC 模块）
+- **从直觉到实践**：理解条件概率反转 → 计算后验概率 → 真实数据分析
+- **中英文双语**：完整的双语内容
+
+**核心主题**：
+1. **思维模式对比**：为什么 p = 0.03 ≠ 97% 概率
+2. **贝叶斯公式**：从医疗检测到基因差异表达
+3. **FDR 的贝叶斯解释**：为什么多重检验需要校正
+4. **Empirical Bayes**：limma 的小样本魔法
+5. **先验选择**：如何编码生物学知识
+6. **贝叶斯工作流**：从数据到决策的完整流程
+7. **实践练习**：用贝叶斯思维重新解读已发表结果
+
+**使用场景**：当你想理解贝叶斯推断、从频率学派转向贝叶斯学派、学习如何结合先验知识、或理解 limma 在小样本下表现好的原因时使用。
+
+**文档**：参见 [BAYESIAN_THINKING_SKILL.md](BAYESIAN_THINKING_SKILL.md)
+
+**与其他 skills 的区别**：
+- **figureya-learn-statistics**：方法学习（如何使用统计）
+- **figureya-inference-thinking**：理解统计推断（频率学派 + 贝叶斯学派）
+- **figureya-bayesian-thinking**：专门的贝叶斯训练（思维模式重构）
+
+**推荐学习顺序**：
+1. figureya-inference-thinking（建立统计基础）
+2. figureya-bayesian-thinking（深化贝叶斯思维）
+3. figureya-learn-statistics（按需学习具体方法）
+
 ## 安装
 
 ### 快速安装
@@ -490,6 +589,10 @@ curl -o ~/.claude/skills/figureya-learn-statistics.md \
 # 安装 FigureYa Inference Thinking 🆕
 curl -o ~/.claude/skills/figureya-inference-thinking.md \
   https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-inference-thinking.md
+
+# 安装 FigureYa Bayesian Thinking 🆕
+curl -o ~/.claude/skills/figureya-bayesian-thinking.md \
+  https://raw.githubusercontent.com/ying-ge/FigureYa-skills/main/skills/figureya-bayesian-thinking.md
 ```
 
 详细安装说明请参阅 [INSTALL.md](INSTALL.md)。
@@ -562,6 +665,28 @@ p-value 到底是什么？
 
 这个 skill 将引导你通过火山图深入理解统计概念。
 
+### 使用 FigureYa Bayesian Thinking 🆕
+
+在 Claude Code 中使用以下任一提示：
+
+```
+我想理解贝叶斯推断
+```
+
+```
+为什么 p < 0.05 不意味着 95% 概率？
+```
+
+```
+如何结合生物学先验知识？
+```
+
+```
+用 figureya-bayesian-thinking 帮我理解贝叶斯推断
+```
+
+这个 skill 将通过医疗检测和基因表达分析等生物医学实例，引导你从"显著性思维"转向"贝叶斯式的不确定性更新思维"。
+
 ## 安装
 
 ## 项目结构
@@ -572,7 +697,8 @@ FigureYa-skills/
 │   ├── figureya-pdf-parser.md              # PDF 解析和模块生成工具 🆕
 │   ├── figureya-creator.md                 # FigureYa 模块创建工具
 │   ├── figureya-learn-statistics.md        # 统计学学习 skill
-│   └── figureya-inference-thinking.md      # 统计推断思维 skill 🆕
+│   ├── figureya-inference-thinking.md      # 统计推断思维 skill 🆕
+│   └── figureya-bayesian-thinking.md       # 贝叶斯思维 skill 🆕
 ├── scripts/                                # 支持脚本 🆕
 │   ├── pdf_parser.py                       # PDF 解析脚本
 │   ├── text_miner.py                       # 文本挖掘脚本
@@ -586,6 +712,7 @@ FigureYa-skills/
 ├── QUICK_START.md                          # 快速使用指南
 ├── STATISTICS_LEARNING_SKILL.md           # 详细 skill 文档
 ├── INFERENCE_THINKING_SKILL.md            # 统计思维 skill 文档 🆕
+├── BAYESIAN_THINKING_SKILL.md             # 贝叶斯思维 skill 文档 🆕
 └── README.md                               # 本文件
 ```
 
