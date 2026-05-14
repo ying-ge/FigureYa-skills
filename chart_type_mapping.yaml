@@ -1,0 +1,157 @@
+# 图表类型到 FigureYa 模块的映射配置
+# Chart type to FigureYa module mapping configuration
+
+# 基础统计图 | Basic statistical charts
+basic_statistics:
+  box_plot:
+    name: "Box Plot"
+    module: "FigureYa02boxplot"
+    keywords: ["box plot", "boxplot", "box-and-whisker"]
+    r_packages: ["ggplot2", "ggpubr"]
+
+  scatter_plot:
+    name: "Scatter Plot"
+    module: "FigureYa01scatter"
+    keywords: ["scatter plot", "scatterplot", "scatter"]
+    r_packages: ["ggplot2"]
+
+  bar_plot:
+    name: "Bar Plot"
+    module: "FigureYaXXbarplot"
+    keywords: ["bar plot", "barplot", "bar chart", "column chart"]
+    r_packages: ["ggplot2"]
+
+  violin_plot:
+    name: "Violin Plot"
+    module: "FigureYaXXviolin"
+    keywords: ["violin plot", "violin"]
+    r_packages: ["ggplot2", "ggpubr"]
+
+# 组学分析图 | Genomics analysis charts
+genomics:
+  volcano_plot:
+    name: "Volcano Plot"
+    module: "FigureYa03volcano"
+    keywords: ["volcano plot", "volcano", "volcano map"]
+    r_packages: ["EnhancedVolcano", "ggplot2"]
+    analysis_methods: ["limma", "DESeq2", "edgeR"]
+
+  heatmap:
+    name: "Heatmap"
+    module: "FigureYa05heatmap"
+    keywords: ["heatmap", "heat map", "heat-map"]
+    r_packages: ["pheatmap", "ComplexHeatmap", "ggplot2"]
+
+  pca_plot:
+    name: "PCA Plot"
+    module: "FigureYaXXpca"
+    keywords: ["pca", "principal component analysis", "principal components"]
+    r_packages: ["ggplot2", "stats"]
+    analysis_methods: ["prcomp", "princomp"]
+
+  ma_plot:
+    name: "MA Plot"
+    module: "FigureYaXXmaplot"
+    keywords: ["ma plot", "ma-plot", "ma-map"]
+    r_packages: ["ggplot2", "limma"]
+
+  correlation_plot:
+    name: "Correlation Plot"
+    module: "FigureYaXXcorrelation"
+    keywords: ["correlation plot", "correlation heatmap", "correlogram"]
+    r_packages: ["corrplot", "ggplot2"]
+
+# 生存分析图 | Survival analysis charts
+survival:
+  kaplan_meier:
+    name: "Kaplan-Meier Curve"
+    module: "FigureYa08survival"
+    keywords: ["kaplan-meier", "kaplan meier", "km curve", "survival curve"]
+    r_packages: ["survival", "survminer", "ggplot2"]
+    analysis_methods: ["survfit", "survdiff"]
+
+  cox_regression:
+    name: "Cox Regression"
+    module: "FigureYaXXcox"
+    keywords: ["cox regression", "cox proportional hazards", "cox model"]
+    r_packages: ["survival", "survminer"]
+
+# 复杂组合图 | Complex composite charts
+complex:
+  oncoprint:
+    name: "Oncoprint / Oncoplot"
+    module: "FigureYa42oncoprint"
+    keywords: ["oncoprint", "oncoplot", "mutation landscape", "waterfall plot"]
+    r_packages: ["maftools", "ComplexHeatmap"]
+    analysis_methods: ["TCGAbiolinks"]
+
+  circos_plot:
+    name: "Circos Plot"
+    module: "FigureYaXXcircos"
+    keywords: ["circos", "circular plot", "chord diagram"]
+    r_packages: ["circlize", "ComplexHeatmap"]
+
+  forest_plot:
+    name: "Forest Plot"
+    module: "FigureYaXXforest"
+    keywords: ["forest plot", "forest plot"]
+    r_packages: ["ggplot2", "forestplot"]
+
+  dot_plot:
+    name: "Dot Plot"
+    module: "FigureYaXXdotplot"
+    keywords: ["dot plot", "dotplot"]
+    r_packages: ["ggplot2"]
+
+# 其他常见类型 | Other common types
+other:
+  bubble_plot:
+    name: "Bubble Plot"
+    module: "FigureYaXXbubble"
+    keywords: ["bubble plot", "bubble chart"]
+    r_packages: ["ggplot2"]
+
+  ridge_plot:
+    name: "Ridge Plot"
+    module: "FigureYaXXridge"
+    keywords: ["ridge plot", "joyplot", "ridgeline plot"]
+    r_packages: ["ggplot2", "ggridges"]
+
+  sankey:
+    name: "Sankey Diagram"
+    module: "FigureYaXXsankey"
+    keywords: ["sankey", "sankey diagram", "alluvial"]
+    r_packages: ["ggplot2", "networkD3"]
+
+# 同义词映射 | Synonym mapping
+synonyms:
+  "km": "kaplan_meier"
+  "km survival": "kaplan_meier"
+  "survival": "kaplan_meier"
+  "oncoplot": "oncoprint"
+  "mutation map": "oncoprint"
+  "volcano map": "volcano_plot"
+  "heat-map": "heatmap"
+  "boxplot": "box_plot"
+  "scatterplot": "scatter_plot"
+  "barplot": "bar_plot"
+  "box-and-whisker": "box_plot"
+
+# 优先级排序（用于多个匹配时的排序）
+# Priority ranking (used when multiple matches exist)
+priority:
+  - volcano_plot
+  - heatmap
+  - kaplan_meier
+  - oncoprint
+  - box_plot
+  - scatter_plot
+  - pca_plot
+  - ma_plot
+  - correlation_plot
+  - violin_plot
+  - bar_plot
+  - cox_regression
+  - circos_plot
+  - forest_plot
+  - dot_plot

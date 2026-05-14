@@ -641,7 +641,32 @@ mycol <- c("darkgreen","chocolate4","blueviolet")
 
 ## 工作流程
 
-当用户提供 R 代码并要求创建 FigureYa 模块时：
+### 当用户提供 PDF 文件时
+
+如果用户提供的是文献 PDF 文件，希望为其中的图表自动生成 FigureYa 模块：
+
+**使用 `figureya-pdf-parser` skill**：
+
+```
+用户：我有一篇论文的 PDF，想要为其中的 Figure 生成 FigureYa 模块
+```
+
+调用 `figureya-pdf-parser` skill，该 skill 会：
+
+1. **自动解析 PDF**，提取所有图表和文本
+2. **识别图表类型**（结合视觉识别和文本挖掘）
+3. **生成对应的 FigureYa 模块**（基于现有模板）
+
+**三种自动化模式**：
+- **完全自动化**：自动生成所有模块，无需人工干预
+- **半自动化**（推荐）：自动识别但请求用户确认关键信息
+- **辅助式**：提供识别建议，由用户手动选择和定制
+
+详细信息请参考 `figureya-pdf-parser` skill。
+
+---
+
+### 当用户提供 R 代码并要求创建 FigureYa 模块时：
 
 1. **分析代码结构**
    - 识别主要功能

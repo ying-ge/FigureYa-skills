@@ -1,0 +1,248 @@
+# 方法和工具关键词配置
+# Method and tool keywords configuration
+
+# R 包关键词库 | R package keywords
+r_packages:
+  # 差异分析 | Differential analysis
+  differential_analysis:
+    - limma
+    - DESeq2
+    - edgeR
+    - ballgown
+    - sleuth
+    - DEsingle
+
+  # 可视化 | Visualization
+  visualization:
+    - ggplot2
+    - EnhancedVolcano
+    - pheatmap
+    - ComplexHeatmap
+    - circlize
+    - ggpubr
+    - ggridges
+    - survminer
+    - forestplot
+    - corrplot
+    - plotly
+    - gridExtra
+    - cowplot
+    - patchwork
+
+  # 生存分析 | Survival analysis
+  survival:
+    - survival
+    - survminer
+    - flexsurv
+
+  # 数据获取 | Data retrieval
+  data_retrieval:
+    - TCGAbiolinks
+    - GEOquery
+    - biomaRt
+    - AnnotationDbi
+
+  # 富集分析 | Enrichment analysis
+  enrichment:
+    - clusterProfiler
+    - enrichplot
+    - DOSE
+    - ReactomePA
+    - topGO
+
+  # 突变分析 | Mutation analysis
+  mutation:
+    - maftools
+    - ComplexHeatmap
+
+  # 降维分析 | Dimensionality reduction
+  dimensionality_reduction:
+    - Rtsne
+    - umap
+    - FactoMineR
+    - pcaMethods
+
+  # 机器学习 | Machine learning
+  machine_learning:
+    - caret
+    - randomForest
+    - xgboost
+    - e1071
+    - glmnet
+
+# 统计方法关键词 | Statistical method keywords
+statistical_methods:
+  # 生存分析方法 | Survival analysis methods
+  survival_analysis:
+    - kaplan-meier
+    - kaplan meier
+    - km curve
+    - log-rank
+    - log rank
+    - cox proportional hazards
+    - cox regression
+    - cox model
+    - survival curve
+    - time-to-event
+
+  # 差异表达分析方法 | Differential expression methods
+  differential_expression:
+    - differential expression
+    - differential expression analysis
+    - differential gene expression
+    - dge
+    - gene expression
+    - rna-seq
+    - rna seq
+    - transcriptomics
+
+  # 降维方法 | Dimensionality reduction methods
+  dimensionality_reduction:
+    - principal component analysis
+    - pca
+    - principal components
+    - t-sne
+    - tsne
+    - t-sne
+    - umap
+    - multidimensional scaling
+    - mds
+
+  # 聚类方法 | Clustering methods
+  clustering:
+    - hierarchical clustering
+    - k-means
+    - kmeans
+    - consensus clustering
+    - cluster analysis
+
+  # 相关性分析 | Correlation analysis
+  correlation:
+    - correlation
+    - correlation analysis
+    - pearson correlation
+    - spearman correlation
+    - correlation coefficient
+
+  # 回归方法 | Regression methods
+  regression:
+    - linear regression
+    - logistic regression
+    - cox regression
+    - lasso
+    - ridge regression
+
+# 图表描述关键词 | Chart description keywords
+chart_descriptions:
+  volcano_plot:
+    - volcano plot
+    - volcano
+    - log-fold change vs p-value
+    - log2 fold change
+    - differentially expressed genes
+    - upregulated
+    - downregulated
+
+  heatmap:
+    - heatmap
+    - heat map
+    - expression heatmap
+    - clustering heatmap
+    - pattern
+    - z-score
+
+  survival:
+    - survival curve
+    - survival analysis
+    - kaplan-meier
+    - km curve
+    - overall survival
+    - progression-free survival
+    - survival probability
+    - survival rate
+
+  oncoprint:
+    - oncoprint
+    - oncoplot
+    - mutation landscape
+    - somatic mutation
+    - mutation pattern
+    - mutation frequency
+    - waterfall plot
+
+  pca:
+    - principal component
+    - pca
+    - dimensionality reduction
+    - sample clustering
+    - batch effect
+
+  correlation:
+    - correlation
+    - correlation matrix
+    - correlation plot
+    - correlation heatmap
+
+# 常见期刊和方法学文献引用 | Common journal and method citations
+common_citations:
+  - "TCGA"
+  - "GEO"
+  - "GTEx"
+  - "cBioPortal"
+  - "cBio"
+  - "Gene Expression Omnibus"
+  - "The Cancer Genome Atlas"
+
+# 置信度评分权重 | Confidence scoring weights
+confidence_weights:
+  visual_recognition:
+    max: 0.4
+    description: "视觉识别的最大权重"
+
+  text_mention:
+    figure_legend: 0.3
+    description: "Figure legend 中直接提及的权重"
+
+  methods_section:
+    tool_match: 0.2
+    description: "Methods 部分工具匹配的权重"
+
+  supplementary:
+    method_match: 0.1
+    description: "Supplementary 部分方法匹配的权重"
+
+  threshold:
+    high_confidence: 0.85
+    medium_confidence: 0.70
+    low_confidence: 0.50
+    description: "置信度阈值"
+
+# 同义词和缩写映射 | Synonym and abbreviation mapping
+synonyms:
+  "km": "kaplan-meier"
+  "km curve": "kaplan-meier"
+  "log-rank": "log rank"
+  "rna-seq": "rna seq"
+  "tsne": "t-sne"
+  "oncoplot": "oncoprint"
+  "deseq": "deseq2"
+  "edger": "edger"
+
+# 图表类型优先级 | Chart type priority
+# 当多个类型匹配时，按此优先级选择
+chart_priority:
+  - volcano_plot
+  - heatmap
+  - kaplan_meier
+  - oncoprint
+  - box_plot
+  - scatter_plot
+  - pca_plot
+  - ma_plot
+  - correlation_plot
+  - violin_plot
+  - bar_plot
+  - cox_regression
+  - circos_plot
+  - forest_plot
+  - dot_plot
