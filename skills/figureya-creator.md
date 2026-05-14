@@ -666,7 +666,188 @@ mycol <- c("darkgreen","chocolate4","blueviolet")
 
 ---
 
-### 当用户提供 R 代码并要求创建 FigureYa 模块时：
+### 当用户提供 R 代码并要求创建 FigureYa 模块时（增强版）
+
+现在提供智能 R 代码分析功能，可以自动生成 80% 的文档内容：
+
+**示例**：
+
+```
+用户：把这个 R 代码转换成 FigureYa 模块
+
+library(ggplot2)
+library(survival)
+library(survminer)
+
+data <- read.csv("survival_data.csv")
+
+fit <- survfit(Surv(time, status) ~ group, data = data)
+ggsurvplot(fit, 
+           data = data,
+           pval = TRUE, 
+           conf.int = TRUE,
+           risk.table = TRUE,
+           palette = "jco")
+```
+
+**系统响应**：
+
+```
+分析您的代码... ✓
+
+识别信息：
+- R 包：ggplot2, survival, survminer
+- 数据格式：CSV 文件，需要 time, status, group 列
+- 图表类型：Kaplan-Meier 生存曲线
+- 关键参数：pval=TRUE, conf.int=TRUE, risk.table=TRUE
+
+✓ 生成模块骨架
+✓ 自动填充文档（80% 完成）
+  - 需求描述：基于识别信息生成
+  - 应用场景：生存分析的标准场景
+  - 参数说明：pval, conf.int 等参数解释
+  - 数据要求：time, status, group 列说明
+
+请查看生成的模块，补充具体的应用场景和数据来源说明...
+```
+
+**工作流程**：
+
+1. **智能分析 R 代码**（新增）
+   - 识别使用的 R 包
+   - 识别数据输入格式
+   - 推断图表类型
+   - 提取关键参数
+   - 生成文档初稿
+
+2. **创建标准目录结构**
+   ```bash
+   mkdir -p FigureYaXXX[模块名]
+   cd FigureYaXXX[模块名]
+   ```
+
+3. **生成 R Markdown 文件**
+   - 添加标准 YAML header
+   - **自动填充需求描述**（基于代码分析）
+   - **自动填充应用场景**（匹配图表类型）
+   - **自动生成参数说明**（解释提取的参数）
+   - 插入用户代码
+
+4. **创建 install_dependencies.R**
+   - 从代码中提取 R 包
+   - 生成安装脚本
+
+5. **用户补充剩余信息**
+   - 具体的应用场景描述
+   - 数据来源说明
+   - 期望的视觉效果
+   - 文献引用（如果有）
+
+**自动生成的内容**：
+
+#### 需求描述（自动生成 80%）
+```markdown
+## 需求描述 Requirement description
+
+绘制生存曲线，展示不同组别的生存差异。
+
+Draw survival curves to display survival differences between groups.
+
+**自动识别信息 | Auto-identified information:**
+- 图表类型 | Chart type: Kaplan-Meier 生存曲线
+- R 包 | R packages: survival, survminer, ggplot2
+- 关键特征 | Key features: 包含 P 值、置信区间、风险表
+
+**需要补充 | Need to supplement:**
+- 具体的应用场景
+- 数据来源说明
+- 文献引用（如果有）
+```
+
+#### 应用场景（自动生成 80%）
+```markdown
+## 应用场景 Application scenario
+
+### 方法原理和特点
+Kaplan-Meier 估计量，用于估计生存函数。是非参数统计方法，
+不依赖生存时间的分布假设。
+
+Kaplan-Meier estimator to estimate survival function. Non-parametric statistical
+method without assuming survival distribution.
+
+### 具体使用场景
+适用于：
+- 临床研究的生存分析
+- 两组或多组生存时间比较
+- 估计中位生存时间
+
+Applicable to:
+- Survival analysis in clinical studies
+- Compare survival time between two or more groups
+- Estimate median survival time
+
+### 数据要求
+需要至少包含：
+- time: 生存时间
+- status: 事件状态（0=删失，1=事件）
+- group: 分组变量
+
+At least requires:
+- time: survival time
+- status: event status (0=censored, 1=event)
+- group: grouping variable
+```
+
+#### 参数设置（自动生成 80%）
+```r
+## 参数设置 Parameter setting
+
+# 自动识别的参数
+# Auto-identified parameters
+pval <- TRUE        # 是否显示 P 值 | Show p-value
+conf.int <- TRUE     # 是否显示置信区间 | Show confidence interval
+risk.table <- TRUE  # 是否显示风险表 | Show risk table
+
+# 根据具体需求调整
+# Adjust according to specific needs
+conf.level <- 0.95  # 置信水平 | Confidence level
+palette <- "jco"     # 配色方案 | Color palette
+```
+
+**时间对比**：
+- 传统方式：手动编写所有文档（~2 小时）
+- 智能分析：自动生成 80%，用户补充 20%（~20 分钟）
+
+---
+
+### 当用户提供 PDF 文件时：
+
+如果用户提供的是文献 PDF 文件，希望为其中的图表自动生成 FigureYa 模块：
+
+**使用 `figureya-pdf-parser` skill**：
+
+```
+用户：我有一篇论文的 PDF，想要为其中的 Figure 生成 FigureYa 模块
+```
+
+调用 `figureya-pdf-parser` skill，该 skill 会：
+
+1. **自动解析 PDF**，提取所有图表和文本
+2. **识别图表类型**（结合视觉识别和文本挖掘）
+3. **生成对应的 FigureYa 模块**（基于现有模板）
+
+**三种自动化模式**：
+- **完全自动化**：自动生成所有模块，无需人工干预
+- **半自动化**（推荐）：自动识别但请求用户确认关键信息
+- **辅助式**：提供识别建议，由用户手动选择和定制
+
+详细信息请参考 `figureya-pdf-parser` skill。
+
+---
+
+### 当用户提供 R 代码并要求创建 FigureYa 模块时（传统流程）
+
+如果你更喜欢手动控制整个过程，或者需要更定制化的模块，可以使用传统流程：
 
 1. **分析代码结构**
    - 识别主要功能
