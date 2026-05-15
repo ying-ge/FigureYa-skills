@@ -207,8 +207,18 @@ FigureYa-skills/
 │   │   └── SKILL.md
 │   └── figureya-creator/                  # FigureYa module creator skill
 │       └── SKILL.md
+├── scripts/                                # Supporting scripts 🆕
+│   ├── pdf_parser.py                       # PDF parsing script
+│   ├── text_miner.py                       # Text mining script
+│   ├── chart_identifier.py                 # Chart identification script
+│   ├── info_fusion.py                      # Information fusion script
+│   ├── template_generator.py               # Template generation script
+│   └── r_code_analyzer.py                  # R code analyzer script
+├── chart_type_mapping.yaml                 # Chart type mapping config 🆕
+├── method_keywords.yaml                    # Method keywords config 🆕
 ├── docs/                                   # Additional documentation
 ├── INSTALL.md                              # Installation guide
+├── LICENSE                                 # MIT License
 └── README.md                               # This file
 ```
 
@@ -234,7 +244,7 @@ We welcome contributions! If you have ideas for new skills or improvements to ex
 
 ## License
 
-This project follows the same license as FigureYa: [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+This project is licensed under the [MIT License](LICENSE) - see the LICENSE file for details.
 
 ---
 
@@ -432,11 +442,13 @@ FigureYa-skills/
 │   ├── text_miner.py                       # 文本挖掘脚本
 │   ├── chart_identifier.py                 # 图表识别脚本
 │   ├── info_fusion.py                      # 信息融合脚本
-│   └── template_generator.py               # 模板生成脚本
+│   ├── template_generator.py               # 模板生成脚本
+│   └── r_code_analyzer.py                  # R 代码分析脚本
 ├── chart_type_mapping.yaml                 # 图表类型映射配置 🆕
 ├── method_keywords.yaml                    # 方法关键词配置 🆕
 ├── docs/                                   # 附加文档
 ├── INSTALL.md                              # 安装指南
+├── LICENSE                                 # MIT License
 └── README.md                               # 本文件
 ```
 
@@ -462,7 +474,7 @@ FigureYa-skills/
 
 ## 许可证
 
-本项目遵循与 FigureYa 相同的许可证：[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/)
+本项目采用 [MIT License](LICENSE) 开源许可证 - 详见 LICENSE 文件。
 
 ---
 

@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+
+# Copyright (c) 2025 FigureYa Community
+# Licensed under the MIT License
+#
 """
 文本挖掘脚本 - 从 PDF 文本中提取方法和工具信息
 Text Mining Script - Extract method and tool information from PDF text

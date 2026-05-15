@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+
+# Copyright (c) 2025 FigureYa Community
+# Licensed under the MIT License
+#
 """
 R 代码分析器 - 智能分析 R 脚本并提取关键信息
 R Code Analyzer - Intelligently analyze R scripts and extract key information

@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+
+# Copyright (c) 2025 FigureYa Community
+# Licensed under the MIT License
+#
 """
 模板生成脚本 - 基于现有 FigureYa 模块生成新模块
 Template Generator - Generate new modules based on existing FigureYa modules

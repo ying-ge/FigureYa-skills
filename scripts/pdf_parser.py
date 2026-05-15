@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+#
+# Copyright (c) 2025 FigureYa Community
+# Licensed under the MIT License
+#
 """
 PDF 解析脚本 - 从 PDF 文件中提取图片和文本
 PDF Parser - Extract images and text from PDF files

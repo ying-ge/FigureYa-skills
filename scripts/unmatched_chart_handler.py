@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+
+# Copyright (c) 2025 FigureYa Community
+# Licensed under the MIT License
+#
 """
 未匹配图表处理器 - 处理没有找到匹配 FigureYa 模块的图表
 Unmatched Chart Handler - Handle charts without matching FigureYa modules

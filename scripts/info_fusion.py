@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+
+# Copyright (c) 2025 FigureYa Community
+# Licensed under the MIT License
+#
 """
 信息融合脚本 - 综合视觉识别和文本信息
 Information Fusion - Combine visual recognition and text information

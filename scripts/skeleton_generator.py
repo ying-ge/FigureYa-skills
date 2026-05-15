@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+
+# Copyright (c) 2025 FigureYa Community
+# Licensed under the MIT License
+#
 """
 骨架生成器 - 为未匹配的图表生成模块骨架
 Skeleton Generator - Generate module skeleton for unmatched charts

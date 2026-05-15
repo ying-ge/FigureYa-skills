@@ -222,7 +222,7 @@ If you have issues or suggestions:
 
 ## License
 
-Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
 
 ---
 
@@ -434,4 +434,4 @@ curl -o ~/.claude/skills/figureya-creator/SKILL.md \
 
 ## 许可证
 
-Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+本项目采用 MIT License 开源许可证 - 详见 [LICENSE](../LICENSE) 文件。

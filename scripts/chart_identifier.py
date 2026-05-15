@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+
+# Copyright (c) 2025 FigureYa Community
+# Licensed under the MIT License
+#
 """
 图表识别脚本 - 使用 AI 识别图表类型
 Chart Identifier - Use AI to identify chart types
